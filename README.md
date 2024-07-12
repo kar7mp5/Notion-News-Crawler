@@ -33,7 +33,7 @@ X_NAVER_SECRET
 self.headers = {
     "Authorization": f"Bearer {self.notion_token}", # notion application token
     "Content-Type": "application/json",
-    "Notion-Version": "2022-06-28"                          # latest version of the notion
+    "Notion-Version": "2022-06-28"                  # latest version of the notion
 }
 ```
 

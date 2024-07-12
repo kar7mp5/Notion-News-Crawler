@@ -11,4 +11,4 @@ class Config:
         self.database_id = os.getenv('NOTION_DATABASE_ID')
         # Naver APIs
         self.x_naver_client_id = os.getenv('X_NAVER_CLIENT_ID')
-        self.x_naver_secret = os.getenv('EStFmsP0X_')
+        self.x_naver_secret = os.getenv('X_NAVER_SECRET')

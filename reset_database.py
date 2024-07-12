@@ -76,7 +76,7 @@ class ResetDatabase(Config):
                             deleted_pages += 1
                             pbar.update(1)  # Update progress bar for each completed page
                         except Exception as exc:
-                            print(f'Page {page["id"]} generated an exception: {exc}')
+                            print(f'Page {pages["id"]} generated an exception: {exc}')
                 
                 # Retrieve pages again after deletion
                 pages = self.get_all_pages()

@@ -35,7 +35,7 @@ class UploadToDataBase(Config):
         new_page = {
             "parent": {"database_id": self.database_id},
             "properties": {
-                "Name": {  # Adjusted to match the actual property name in Notion
+                "Name": {
                     "title": [
                         {
                             "text": {
@@ -53,12 +53,19 @@ class UploadToDataBase(Config):
                         }
                     ]
                 },
-                "Tags": {  # Adjusted to match the actual property name in Notion
+                "URL": {
+                    "url": item["link"]
+                },
+                "Date": {
+                    "date": {
+                        "start": item["pubDate"]
+                    }
+                },
+                "Tags": {
                     "multi_select": [{"name": item["tag"]}]
                 }
             }
         }
-
         response = requests.post(url, headers=self.headers, data=json.dumps(new_page))
         if response.status_code == 200:
             pass

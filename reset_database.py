@@ -1,7 +1,11 @@
 # reset_database.py
 import requests
+import concurrent.futures
+from tqdm import tqdm
 
 from config import Config
+
+
 
 
 class ResetDatabase(Config):
@@ -17,7 +21,7 @@ class ResetDatabase(Config):
         self.headers = {
             "Authorization": f"Bearer {self.notion_token}",
             "Content-Type": "application/json",
-            "Notion-Version": "2022-06-28"
+            "Notion-Version": "2022-06-28",
         }
 
 
@@ -30,6 +34,7 @@ class ResetDatabase(Config):
         url = f"https://api.notion.com/v1/databases/{self.database_id}/query"
         response = requests.post(url, headers=self.headers)
         if response.status_code == 200:
+            print(f"Left pages: {len(response.json()['results'])}")
             return response.json()["results"]
         else:
             print(f'Failed to retrieve pages. Error: {response.json()}')
@@ -45,7 +50,7 @@ class ResetDatabase(Config):
         url = f"https://api.notion.com/v1/blocks/{page_id}"
         response = requests.delete(url, headers=self.headers)
         if response.status_code == 200:
-            print(f'Successfully deleted page: {page_id}')
+            pass
         else:
             print(f'Failed to delete page: {page_id}, Error: {response.json()}')
 
@@ -54,8 +59,30 @@ class ResetDatabase(Config):
         """Delete all pages from the database."""
         
         pages = self.get_all_pages()
-        for page in pages:
-            self.delete_page(page["id"])
+        total_pages = len(pages)
+        deleted_pages = 0
+
+        # Use tqdm inside the while loop
+        while len(pages) > 0:
+            with tqdm(total=total_pages, desc='Deleting pages', unit='page', unit_scale=True) as pbar:
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    # Submit delete_page tasks and get futures
+                    futures = [executor.submit(self.delete_page, page["id"]) for page in pages]
+
+                    # As_completed to iterate over completed futures
+                    for future in concurrent.futures.as_completed(futures):
+                        try:
+                            future.result()  # Ensure the task completed without exception
+                            deleted_pages += 1
+                            pbar.update(1)  # Update progress bar for each completed page
+                        except Exception as exc:
+                            print(f'Page {page["id"]} generated an exception: {exc}')
+                
+                # Retrieve pages again after deletion
+                pages = self.get_all_pages()
+                total_pages = len(pages)  # Update total pages after each iteration
+        
+        print(f'All pages deleted. Total pages deleted: {deleted_pages}')
 
 
 if __name__=='__main__':

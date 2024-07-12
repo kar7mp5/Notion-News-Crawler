@@ -1,6 +1,8 @@
 # naver_api.py
 import requests
 import html, re
+from datetime import datetime
+import pytz
 
 from config import Config
 
@@ -69,7 +71,20 @@ class NaverAPI(Config):
         for item in response['items']:
             item['title'] = self.clean_text(item['title'])
             item['description'] = self.clean_text(item['description'])
+            
+            # Input date and time string
+            input_datetime_str = item['pubDate']
 
+            # Define the input format for parsing
+            input_format = "%a, %d %b %Y %H:%M:%S %z"
+            input_datetime = datetime.strptime(input_datetime_str, input_format)
+
+            # Convert to UTC timezone
+            input_datetime_utc = input_datetime.astimezone(pytz.utc)
+
+            # Convert to ISO 8601 format
+            item['pubDate'] = input_datetime_utc.isoformat()
+            
         return {
             'contents': response['items'], 
             'tags': self.subject
@@ -89,14 +104,16 @@ class NaverAPI(Config):
         tag = data['tags']
 
         for item in data['contents']:
+
             result.append({
                             'name': item['title'], 
                             'description': item['description'],
+                            'link': item['link'],
+                            'pubDate': item['pubDate'],
                             'tag': tag
                         })
         
         return result
-
 
 
 if __name__=='__main__':

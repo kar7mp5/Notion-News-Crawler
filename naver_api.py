@@ -30,7 +30,8 @@ class NaverAPI(Config):
             'Economy': '경제',
             'Science': '과학',
             'Society': '사회',
-            'Politics': '정치'
+            'Politics': '정치',
+            'Stock': '주식'
         }
 
 

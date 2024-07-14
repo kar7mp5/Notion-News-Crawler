@@ -1,7 +1,7 @@
 # Environment parameters
 python-dotenv
 
-# Know progressing
+# Progressing
 tqdm
 pytz
 requests

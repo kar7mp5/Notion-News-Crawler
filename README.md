@@ -67,5 +67,5 @@ The result of the Naver API
 **Board view**
 ![Board](./img/Board.png)
 
-**Calender View**
+**Calendar View**
 ![Calendar](./img/Calender.png)

@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='notion-news-crawler',
-    version='0.0.8',
+    version='0.0.9',
     url='https://github.com/kar7mp5/Notion-News-Crawler.git',
     author='MinSup Kim',
     author_email='tommy1005a@gmail.com',

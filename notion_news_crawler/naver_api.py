@@ -70,7 +70,7 @@ class NaverAPI(Config):
             response = requests.get(url, headers=self.headers, params=params)
             response = response.json()
         except requests.exceptions.RequestException as e:
-                print(f'Failed to add: {item["name"]}, Error: {e}')
+                print(f'Failed to add! Error: {e}')
 
         
         for item in response['items']:

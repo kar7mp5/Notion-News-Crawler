@@ -70,19 +70,3 @@ The Naver API result values ​​are as follows, and when uploading to Notion, 
     "pubDate": "published date"
 }
 ```
-
-## Result
-
-Because it uses the Notion database, it can be used in various ways as follows.
-
-**Table view**
-
-![Table](./img/Table.png)
-
-**Board view**
-
-![Board](./img/Board.png)
-
-**Calendar View**
-
-![Calendar](./img/Calendar.png)

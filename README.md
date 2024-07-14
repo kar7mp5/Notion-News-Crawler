@@ -26,6 +26,24 @@ $ pip3 install notion-news-crawler
 | :-----------------: | :------------------------: |
 | Notion News Crawler | 3.8, 3.9, 3.10, 3.11, 3.12 |
 
+## Quick Start
+
+```python
+from notion_news_crawler import NaverAPI, UploadToDataBase, ResetDatabase
+
+
+if __name__=='__main__':
+    reset_database = ResetDatabase()
+    reset_database.delete_all_pages()
+
+    for subject in ['Economy', 'Science', 'Society', 'Politics', 'Stock']:
+        naver_api = NaverAPI(subject, 100)
+        news_data = naver_api.parse_data(naver_api.get_news())
+
+        upload_to_database = UploadToDataBase(news_data)
+        upload_to_database.add_to_notion()
+```
+
 ## APIs
 
 To use this library, Notion and Naver API are required.

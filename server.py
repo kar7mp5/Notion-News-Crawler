@@ -1,11 +1,12 @@
-# main.py
-from naver_api import NaverAPI
-from upload_to_database import UploadToDataBase
+from datetime import datetime
+import time
 
+now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-for subject in ['Economy', 'Science', 'Society', 'Politics', 'Stock']:
-    naver_api = NaverAPI(subject, 100)
-    news_data = naver_api.parse_data(naver_api.get_news())
+print(now)
 
-    upload_to_database = UploadToDataBase(news_data)
-    upload_to_database.add_to_notion()
+start = time.time()
+print("hello")
+time.sleep(10)
+end = time.time()
+print(end - start)

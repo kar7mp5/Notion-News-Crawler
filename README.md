@@ -1,51 +1,65 @@
 # Notion-News-Crawler
 
-Notion news crawler mecro
+Notion News Crawler is a Python library that collects news from Notion and uploads it to a database.
 
-## Table of contents
+News can be collected using Naver Search API, so only Naver and Notion API keys can be used by putting them in environment variables.
 
-[**1. APIs**](#1-apis)  
-[1-1. Environment parameters (`config.py`)](#1-1-environment-parameters-configpy)  
-[1-2. Notion API](#1-2-notion-api)  
-[1-3. Naver API](#1-3-naver-api)
+## Table of Contents
 
-[**2. Result**](#2-result)
+1. [Install](#install)
+2. [Supported Python Version](#supported-python-version)
+3. [APIs](#apis)
+    - [Environment Parameters](#environment-parameters)
+    - [Notion API](#notion-api)
+    - [Naver API](#naver-api)
+4. [Result](#result)
 
-## 1. APIs
+## Install
 
-### 1-1. Environment parameters (`config.py`)
+```bash
+$ pip3 install notion-news-crawler
+```
 
-**`.env` file**
+## Supported Python version
+
+|       Library       |     Supported Version      |
+| :-----------------: | :------------------------: |
+| Notion News Crawler | 3.8, 3.9, 3.10, 3.11, 3.12 |
+
+## APIs
+
+To use this library, Notion and Naver API are required.
+
+Just enter the two API Key values ​​in the environment variables.
+
+### Environment parameters
+
+You can create an environment variable .env file and use it by entering the following.
+
+**.env file format**
 
 ```
 # Notion
-NOTION_TOKEN
-NOTION_DATABASE_ID
+NOTION_TOKEN='YOUR NOTION TOKEN'
+NOTION_DATABASE_ID='YOUR NOTION DATABASE ID'
 
 # Naver
-X_NAVER_CLIENT_ID
-X_NAVER_SECRET
+X_NAVER_CLIENT_ID='YOUR NAVER CLIENT ID'
+X_NAVER_SECRET='YOUR NAVER SECRET KEY'
 ```
 
-### 1-2. Notion API
+### Notion API
 
-[**Notion API**](https://developers.notion.com/)
+The Notion API can be found at: [**Notion API**](https://developers.notion.com/)  
+Enter the Notion application token value in the environment variable.
+Create a Notion application, register the Notion application in the database you will use, and then use it.
 
-```python
-self.headers = {
-    "Authorization": f"Bearer {self.notion_token}", # notion application token
-    "Content-Type": "application/json",
-    "Notion-Version": "2022-06-28"                  # latest version of the notion
-}
-```
+### Naver API
 
-### 1-3. Naver API
+You can create a [Naver application](https://developers.naver.com/apps/#/list) and obtain the API key value.  
+More detail on [NAVER API docs](https://developers.naver.com/docs/serviceapi/search/news/news.md#%EB%89%B4%EC%8A%A4)
 
-**Naver API**  
-[Naver API application](https://developers.naver.com/apps/#/list)  
-[NAVER API docs](https://developers.naver.com/docs/serviceapi/search/news/news.md#%EB%89%B4%EC%8A%A4)
-
-The result of the Naver API
+The Naver API result values ​​are as follows, and when uploading to Notion, you can refine and use the data as you wish.
 
 ```json
 {
@@ -57,15 +71,18 @@ The result of the Naver API
 }
 ```
 
----
+## Result
 
-### 2. Result
+Because it uses the Notion database, it can be used in various ways as follows.
 
 **Table view**
+
 ![Table](./img/Table.png)
 
 **Board view**
+
 ![Board](./img/Board.png)
 
 **Calendar View**
+
 ![Calendar](./img/Calendar.png)
